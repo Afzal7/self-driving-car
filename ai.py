@@ -63,7 +63,9 @@ class Dqn():
         self.last_reward = 0
 
     def select_action(self, state):
-        
+        probs = F.softmax(self.model(Variable(state, volatile = True)) * 7) # 7 is the temperature
+        action = probs.multinomial()
+        return action.data[0,0]
 
 if __name__ == '__main__':
     network = Network(5,3)
